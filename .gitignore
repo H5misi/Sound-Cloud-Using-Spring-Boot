@@ -1,4 +1,5 @@
 # .gitignore file from spring initilzr
+.env
 HELP.md
 .gradle
 build/
