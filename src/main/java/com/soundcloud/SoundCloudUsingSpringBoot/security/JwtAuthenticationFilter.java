@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     /**
      * Provides JWT parsing and validation operations.
      */
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtServiceImpl jwtServiceImpl;
 
     /**
      * Loads application users as Spring Security UserDetails.
@@ -76,9 +76,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = authorizationHeader.substring(TOKEN_PREFIX.length());
 
         // Extract the authenticated user's email from the token
-        String email = jwtTokenProvider.getEmailFromToken(token);
+        String email = jwtServiceImpl.getEmailFromToken(token);
 
-        // Authenticate the request only if it has not already authenticated the current user.
+        // Authenticate the request only if it has not already authenticated the current
+        // user.
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // Load the corresponding user from database as a UserDetails object
