@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.soundcloud.SoundCloudUsingSpringBoot.user.entity.User;
 
@@ -15,15 +15,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 /**
- * Responsible for generating, parsing, and validating
- * JSON Web Tokens (JWT) used for authentication.
+ * Service implementation responsible for generating,
+ * parsing, and validating JSON Web Tokens (JWT)
+ * used for authentication.
  *
- * Provides utility methods to create access tokens
- * and extract authenticated user information from
- * JWT tokens.
+ * Creates signed access tokens and extracts
+ * authenticated user information from JWTs.
  */
-@Component
-public class JwtServiceImpl {
+@Service
+public class JwtServiceImpl implements JwtService {
 
     /**
      * Secret key used to sign and validate JWT tokens.
@@ -64,6 +64,7 @@ public class JwtServiceImpl {
      * @param user the authenticated user
      * @return a signed JWT token
      */
+    @Override
     public String generateToken(User user) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + jwtExpirationMs);
@@ -85,6 +86,7 @@ public class JwtServiceImpl {
      * @param token the JWT token
      * @return the email stored in the token
      */
+    @Override
     public String getEmailFromToken(String token) {
         return getClaims(token).getSubject();
     }
