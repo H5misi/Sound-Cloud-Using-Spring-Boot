@@ -23,7 +23,7 @@ import io.jsonwebtoken.security.Keys;
  * JWT tokens.
  */
 @Component
-public class JwtTokenProvider {
+public class JwtServiceImpl {
 
     /**
      * Secret key used to sign and validate JWT tokens.
@@ -40,7 +40,6 @@ public class JwtTokenProvider {
      */
     @Value("${jwt.expiration-time-ms}")
     private long jwtExpirationMs;
-
 
     /**
      * Creates a cryptographic signing key from the configured
@@ -70,9 +69,9 @@ public class JwtTokenProvider {
         Date expiration = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
-                .subject(user.getEmail()) //store the user email in (sub claim) (subject)
-                .issuedAt(now) //store the token creation time in (iat claim)
-                .expiration(expiration) //store the expiration time in (exp claim)
+                .subject(user.getEmail()) // store the user email in (sub claim) (subject)
+                .issuedAt(now) // store the token creation time in (iat claim)
+                .expiration(expiration) // store the expiration time in (exp claim)
                 .signWith(getSigningKey()) // sign the token using the secret key
                 .compact(); // build the final compact JWT string
     }
@@ -106,7 +105,8 @@ public class JwtTokenProvider {
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey()) // verify the JWT signature with the secret key
-                .build() // build the JWT configured parser (return JwtParser instead of JwtParserBuilder)
+                .build() // build the JWT configured parser (return JwtParser instead of
+                         // JwtParserBuilder)
                 .parseSignedClaims(token) // parses the JWT, validate its signature & expiration, return signed claims
                 .getPayload(); // extract and return the JWT payload (claims)
     }
