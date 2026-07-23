@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.soundcloud.SoundCloudUsingSpringBoot.auth.entity.PasswordResetToken;
+import com.soundcloud.SoundCloudUsingSpringBoot.user.entity.User;
 
 /**
  * Repository responsible for PasswordResetToken persistence operations.
@@ -24,4 +25,6 @@ public interface PasswordResetTokenRepository extends JpaRepository<PasswordRese
      *         otherwise an empty Optional
      */
     Optional<PasswordResetToken> findByToken(String token);
+
+    Optional<PasswordResetToken> findByUser(User user);
 }
