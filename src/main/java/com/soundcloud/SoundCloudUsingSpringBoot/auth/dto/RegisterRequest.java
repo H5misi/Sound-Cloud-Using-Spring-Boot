@@ -1,7 +1,10 @@
 package com.soundcloud.SoundCloudUsingSpringBoot.auth.dto;
 
+import com.soundcloud.SoundCloudUsingSpringBoot.user.entity.AccountType;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -67,6 +70,16 @@ public record RegisterRequest(
          */
         @NotBlank
         @Size(min = 8, max = 100)
-        String password) {
+        String password,
+
+
+        /**
+         * Type of account to create.
+         *
+         * Determines whether the user registers as an
+         * artist or a listener.
+         */
+        @NotNull
+        AccountType accountType) {
 
 }
