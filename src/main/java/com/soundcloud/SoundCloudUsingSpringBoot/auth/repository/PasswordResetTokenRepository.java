@@ -18,13 +18,25 @@ public interface PasswordResetTokenRepository extends JpaRepository<PasswordRese
 
 
     /**
-     * Finds a password reset token by its token value.
+     * Finds an active password reset request by the hash
+     * of its password reset token.
      *
-     * @param token the password reset token value
-     * @return an Optional containing the password reset token if found,
-     *         otherwise an empty Optional
+     * @param tokenHash the SHA-256 hash of the password reset token
+     * @return an Optional containing the matching password reset request,
+     *         or an empty Optional if none exists
      */
-    Optional<PasswordResetToken> findByToken(String token);
+    Optional<PasswordResetToken> findByTokenHash(String tokenHash);
 
+
+    /**
+     * Finds the active password reset request associated with a user.
+     *
+     * Since each user can have only one active password reset request,
+     * this method returns at most one entity.
+     *
+     * @param user the user who requested a password reset
+     * @return an Optional containing the active password reset request,
+     *         or an empty Optional if none exists
+     */
     Optional<PasswordResetToken> findByUser(User user);
 }
