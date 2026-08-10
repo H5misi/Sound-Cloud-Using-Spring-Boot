@@ -40,11 +40,14 @@ public class PasswordResetToken {
     private Long id;
 
     /**
-     * The password reset token value sent to the user
-     * via email during the password recovery process.
+     * SHA-256 hash of the password reset token.
+     *
+     * The raw token is sent to the user's email and is never
+     * stored in the database. During password reset, the
+     * received token is hashed and compared against this value.
      */
     @Column(unique = true, nullable = false)
-    private String token;
+    private String tokenHash;
 
     /**
      * The user associated with this password reset token.
