@@ -18,12 +18,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Represents a password reset token used to allow users
- * to securely reset their account password.
+ * Represents an active password reset request.
  *
- * Each user can have only one active password reset token
- * at a time. Password reset tokens expire after a defined
- * period and are removed once the password is successfully reset.
+ * Stores the SHA-256 hash of a password reset token associated
+ * with a user. The raw token is sent only to the user's email
+ * and is never persisted.
+ *
+ * Each user can have only one active password reset request
+ * at a time. The request expires after a defined period and is
+ * removed once the password is successfully reset.
  */
 @Entity
 @Table(name = "password_reset_tokens")
