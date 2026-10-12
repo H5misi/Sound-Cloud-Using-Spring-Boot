@@ -1,17 +1,22 @@
 package com.soundcloud.SoundCloudUsingSpringBoot.user.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -153,5 +158,18 @@ public class User {
      */
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
+    /**
+     * @ElementCollection: mark this field as a collection of non-entities, 
+     * don't have their database identity or IDs (fully dependant on the parent)
+     *  */ 
+    @ElementCollection
+    @CollectionTable( // specifies the table that store the collection
+        name = "user_favorite_genres",
+        joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "genre", nullable = false)
+    private Set<String> favoriteGenres = new HashSet<>();
 
 }
