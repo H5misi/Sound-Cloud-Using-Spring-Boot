@@ -1,8 +1,12 @@
 package com.soundcloud.SoundCloudUsingSpringBoot.user.mapper;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Component;
 
 import com.soundcloud.SoundCloudUsingSpringBoot.auth.dto.RegisterRequest;
+import com.soundcloud.SoundCloudUsingSpringBoot.user.dto.UserProfileResponse;
+import com.soundcloud.SoundCloudUsingSpringBoot.user.dto.UserResponse;
 import com.soundcloud.SoundCloudUsingSpringBoot.user.dto.UserSummaryResponse;
 import com.soundcloud.SoundCloudUsingSpringBoot.user.entity.ProfileVisibility;
 import com.soundcloud.SoundCloudUsingSpringBoot.user.entity.SuspensionStatus;
@@ -51,5 +55,56 @@ public class UserMapper {
                 .suspensionStatus(SuspensionStatus.ACTIVE)
                 .build();
 
+    }
+
+
+    public UserResponse toUserResponse(User user) {
+        return new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getDisplayName(),
+                user.getBio(),
+                user.getLocation(),
+                user.getAccountType(),
+                user.getProfileVisibility(),
+                user.getProfileImageUrl(),
+                user.getCoverImageUrl(),
+                user.getInstagramUrl(),
+                user.getTwitterUrl(),
+                user.getWebsiteUrl(),
+                // creates an unmodifiable copy of the genres so the response doesn't directly
+                // expose the entity's mutable collection.
+                Set.copyOf(user.getFavoriteGenres()));
+    }
+
+    /**
+     * Ternary operator: 
+     * 
+     * showExtendedProfile ? user.getLocatio() : null
+     * 
+     * is shorthand to:
+     * 
+     * if (showExtendedProfile){
+     *     return user.getLocation();
+     * } else {
+     *     return null;
+     * }
+     * 
+     */
+    public UserProfileResponse toUserProfileResponse(
+            User user, boolean showExtendedProfile) {
+        return new UserProfileResponse(
+                user.getUsername(),
+                user.getDisplayName(),
+                user.getBio(),
+                showExtendedProfile ? user.getLocation() : null,
+                user.getAccountType(),
+                user.getProfileVisibility(),
+                user.getProfileImageUrl(),
+                user.getCoverImageUrl(),
+                showExtendedProfile ? user.getInstagramUrl() : null,
+                showExtendedProfile ? user.getTwitterUrl() : null,
+                showExtendedProfile ? user.getWebsiteUrl() : null,
+                showExtendedProfile ? Set.copyOf(user.getFavoriteGenres()) : Set.of());
     }
 }
