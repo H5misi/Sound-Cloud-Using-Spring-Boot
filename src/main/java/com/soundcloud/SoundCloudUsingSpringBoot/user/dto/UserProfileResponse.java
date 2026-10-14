@@ -6,18 +6,17 @@ import com.soundcloud.SoundCloudUsingSpringBoot.user.entity.AccountType;
 import com.soundcloud.SoundCloudUsingSpringBoot.user.entity.ProfileVisibility;
 
 public record UserProfileResponse(
-    String username,
-    String displayName,
-    String bio,
-    String location,
-    AccountType accountType,
-    ProfileVisibility profileVisibility,
-    String profileImageUrl,
-    String coverImageUrl,
-    String instagramUrl,
-    String twitterUrl,
-    String websiteUrl,
-    Set<String> favoriteGenres
-) {
+        String username,
+        String displayName,
+        String bio,
+        String location,
+        AccountType accountType,
+        ProfileVisibility profileVisibility,
+        String profileImageUrl,
+        String coverImageUrl,
+        String instagramUrl,
+        String twitterUrl,
+        String websiteUrl,
+        Set<String> favoriteGenres) implements ProfileResponse {
 
 }
