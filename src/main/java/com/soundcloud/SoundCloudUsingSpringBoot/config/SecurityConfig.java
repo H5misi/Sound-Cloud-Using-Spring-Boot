@@ -2,6 +2,7 @@ package com.soundcloud.SoundCloudUsingSpringBoot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -73,6 +74,8 @@ public class SecurityConfig {
                         authorizationConfig -> authorizationConfig
                                 // Allow anyone to access authentication endpoints ( /auth/** ).
                                 .requestMatchers("/auth/**").permitAll()
+                                // Allow anyone to view user profiles.
+                                .requestMatchers(HttpMethod.GET, "/users/*").permitAll()
                                 // Require authentication for all other endpoints.
                                 .anyRequest().authenticated())
 
