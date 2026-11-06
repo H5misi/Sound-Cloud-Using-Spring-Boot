@@ -74,7 +74,9 @@ public class SecurityConfig {
                         authorizationConfig -> authorizationConfig
                                 // Allow anyone to access authentication endpoints ( /auth/** ).
                                 .requestMatchers("/auth/**").permitAll()
-                                // Allow anyone to view user profiles.
+                                // Allow anyone to view users profiles.
+                                // Note: Spring Security uses the first matching authorization rule.
+                                // That's why the GET /users/* rule must come before .anyRequest().authenticated().
                                 .requestMatchers(HttpMethod.GET, "/users/*").permitAll()
                                 // Require authentication for all other endpoints.
                                 .anyRequest().authenticated())
