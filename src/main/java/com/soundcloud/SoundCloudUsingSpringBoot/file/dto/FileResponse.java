@@ -1,6 +1,9 @@
-package com.soundcloud.SoundCloudUsingSpringBoot.file.entity;
+package com.soundcloud.SoundCloudUsingSpringBoot.file.dto;
 
 import java.time.LocalDateTime;
+
+import com.soundcloud.SoundCloudUsingSpringBoot.file.entity.FileStatus;
+import com.soundcloud.SoundCloudUsingSpringBoot.file.entity.FileType;
 
 public record FileResponse(
         Long id,
